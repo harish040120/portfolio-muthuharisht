@@ -1,7 +1,7 @@
 {
-  "name": "portfolio-terminal",
-  "version": "1.0.0",
-  "description": "Dark Space Terminal Portfolio",
+  "name": "portfolio-muthuharisht",
+  "version": "2.0.0",
+  "description": "Premium AI Engineer Portfolio - Muthu Harish T",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -10,24 +10,28 @@
     "lint": "next lint",
     "type-check": "tsc --noEmit"
   },
-  "keywords": ["portfolio", "terminal", "next.js"],
   "author": "Muthu Harish T",
   "license": "MIT",
   "dependencies": {
-    "@types/node": "^20.10.0",
-    "@types/react": "^18.2.42",
-    "@types/react-dom": "^18.2.17",
-    "autoprefixer": "^10.4.16",
-    "framer-motion": "^10.16.5",
-    "next": "^14.0.4",
-    "postcss": "^8.4.32",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "tailwindcss": "^3.3.6",
-    "typescript": "^5.3.3"
+    "@types/node": "^22.10.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "autoprefixer": "^10.4.20",
+    "clsx": "^2.1.1",
+    "framer-motion": "^11.12.0",
+    "gsap": "^3.12.5",
+    "lenis": "^1.1.18",
+    "lucide-react": "^0.468.0",
+    "next": "^15.1.0",
+    "postcss": "^8.4.49",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tailwind-merge": "^2.6.0",
+    "tailwindcss": "^3.4.16",
+    "typescript": "^5.7.2"
   },
   "devDependencies": {
-    "eslint": "^8.55.0",
-    "eslint-config-next": "^14.0.4"
+    "eslint": "^9.16.0",
+    "eslint-config-next": "^15.1.0"
   }
 }

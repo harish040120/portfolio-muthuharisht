@@ -2,10 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&f[]=satoshi@400,500,700&f[]=space-grotesk@400,500,600,700&f[]=inter@400,500,600,700&f[]=jetbrains-mono@400,500&display=swap');
+
 :root {
-  --terminal-green: #00ff41;
-  --terminal-dim: #00cc33;
-  --terminal-bg: #0a0e14;
+  --primary: #00D4FF;
+  --secondary: #8B5CF6;
+  --accent: #10B981;
+  --bg-primary: #050816;
+  --bg-surface: #111827;
+  --text-primary: #F9FAFB;
+  --radius: 0.75rem;
 }
 
 * {
@@ -14,65 +20,136 @@
   margin: 0;
 }
 
-html,
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  max-width: 100vw;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: 'Inter', sans-serif;
   overflow-x: hidden;
-  background-color: var(--terminal-bg);
+  cursor: none;
 }
 
-body {
-  color: var(--terminal-green);
-  font-family: ui-monospace, 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', monospace;
-  font-size: 0.85rem;
-  font-weight: bold;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
+@media (pointer: coarse) {
+  body {
+    cursor: auto;
   }
 }
 
-.terminal-text {
-  font-size: 0.85rem;
-  font-weight: bold;
-  color: var(--terminal-green);
+a, button, input, textarea, [role='button'] {
+  cursor: none;
 }
 
-.terminal-cursor::after {
-  content: '█';
-  animation: blink 1s infinite;
-}
-
-@keyframes blink {
-  0%, 50% {
-    opacity: 1;
-  }
-  51%, 100% {
-    opacity: 0;
+@media (pointer: coarse) {
+  a, button, input, textarea, [role='button'] {
+    cursor: auto;
   }
 }
 
-/* Scrollbar styling */
+::selection {
+  background: rgba(0, 212, 255, 0.3);
+  color: white;
+}
+
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--terminal-bg);
+  background: var(--bg-primary);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--terminal-dim);
-  border-radius: 4px;
+  background: rgba(0, 212, 255, 0.3);
+  border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--terminal-green);
+  background: rgba(0, 212, 255, 0.5);
+}
+
+.glass {
+  background: rgba(17, 24, 39, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.glass-card {
+  background: rgba(17, 24, 39, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius);
+  transition: all 0.3s ease;
+}
+
+.glass-card:hover {
+  border-color: rgba(0, 212, 255, 0.2);
+  box-shadow: 0 0 30px rgba(0, 212, 255, 0.05);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #00D4FF, #8B5CF6, #10B981);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-border {
+  position: relative;
+}
+
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, #00D4FF, #8B5CF6);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+.neural-node {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--primary);
+  box-shadow: 0 0 15px rgba(0, 212, 255, 0.6);
+}
+
+.neural-node.pulse {
+  animation: neuralPulse 2s ease-in-out infinite;
+}
+
+@keyframes neuralPulse {
+  0%, 100% { box-shadow: 0 0 10px rgba(0, 212, 255, 0.4); transform: scale(1); }
+  50% { box-shadow: 0 0 25px rgba(0, 212, 255, 0.8); transform: scale(1.2); }
+}
+
+.section-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 6rem 1.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 767px) {
+  .section-container {
+    padding: 4rem 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

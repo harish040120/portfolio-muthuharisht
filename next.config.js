@@ -1,8 +1,11 @@
+const path = require("path")
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  outputFileTracingRoot: path.join(__dirname),
   images: {
-    domains: ['github.com', 'avatars.githubusercontent.com'],
+    formats: ["image/avif", "image/webp"],
   },
 }
 

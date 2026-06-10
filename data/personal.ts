@@ -8,7 +8,7 @@ export const personal = {
   linkedin: "https://www.linkedin.com/in/harish040120",
   github: "https://github.com/harish040120",
   letterboxd: "https://boxd.it/bpFB3",
-  resume: "/resume9.pdf",
+  resume: "/Muthu_Harish_T_Resume.pdf",
   highlights: [
     "Smart India Hackathon 2024 Finalist",
     "Ideathon 2025 Winner",

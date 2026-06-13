@@ -14,7 +14,7 @@ A cinematic, interactive portfolio that reads like a polished AI Operating Syste
 
 ## Identity
 - Name: Muthu Harish T
-- Location: Thoothukudi, Tamil Nadu, India
+- Location: Coimbatore, Tamil Nadu, India
 - Roles: AI Engineer, System Builder, Problem Solver
 
 ## Color & Typography
@@ -49,9 +49,9 @@ A cinematic, interactive portfolio that reads like a polished AI Operating Syste
 7. Projects
 8. Patents
 9. Achievements
-10. Certifications
-11. Build Philosophy
-12. Currently Building
+10. Artifact Marquee
+11. Certifications
+12. Build Philosophy
 13. Education
 14. Hobbies
 15. Contact
@@ -102,17 +102,16 @@ A cinematic, interactive portfolio that reads like a polished AI Operating Syste
 - Visual: large rounded glass box, left colored stripe, right content.
 - Transition: slide from previous section with fade; cards can have a subtle float-in.
 
-### 7) Projects — stacked card viewer (No live demos)
-- Central stacked card carousel built with Framer Motion. Behavior:
-  - Focused main card centered; previous/next cards slightly visible behind with scale reduction and blur.
-  - Controls: left/right arrow and swipe gestures.
-  - Each card fields:
-    - Title
-    - One-line tagline
-    - Tech stack chips
-    - Description (3–6 lines; problem, approach, your role, outcome)
-    - GitHub link(s) if available (present as "Source" button). No "Live Demo" anywhere.
-- Card transitions: slide & scale with spring physics. Accessibility: keyboard focus and ARIA roles for carousel.
+### 7) Projects — 4-column image grid (No live demos)
+- 4-column responsive grid of project cards with `aspect-[4/3]` images:
+  - Each card shows image with gradient overlay and project name at bottom
+  - Hover: scale effect + gradient overlay intensifies
+  - Click expands to full detailed overlay with banner image, `AnimatePresence` scale+opacity
+  - Each project has `color` field for accent styling (border, hover glow)
+  - `architecture` array renders as detail items in expanded view
+  - Images: `/images/project/<name>.jpg` or `.png`, fallback to gradient placeholder
+  - Status/patent badges display when present
+  - No "Live Demo" anywhere — only GitHub "Source" links
 
 ### 8) Patents
 - Cards for each patent with Title, short abstract (1–2 sentences), status (Filed/Granted), relevant tags.
@@ -122,18 +121,19 @@ A cinematic, interactive portfolio that reads like a polished AI Operating Syste
 - Grid of achievement tiles; emphasize important ones with a highlighted tile.
 - Hover effect: glowing border, inner light sweep, and slight scale. Use CSS + Framer Motion for subtlety.
 
-### 10) Certifications
-- Separate compact list of certifications with issuer, date; each card has a small "View Certificate" link if you host PDFs, or a badge icon.
+### 10) Certifications — auto-playing card carousel
+- Auto-playing card carousel with side-arrow navigation
+  - 4:3 aspect ratio cards, full-bleed image with gradient overlay at bottom
+  - Auto-cycles every 2 seconds, pauses on hover
+  - `ChevronLeft`/`ChevronRight` buttons outside card (`-left-5`/`-right-5`), clicking resets timer
+  - Images: `/images/certificates/<filename>.jpeg` or `.jpg`, fallback to gradient placeholder
+  - Shows name, provider, score (if present), and date at bottom of card
 
 ### 11) Build Philosophy
 - Short step flow: Problem → Research → Prototype → Iterate → Deploy.
 - Each step is clickable/hoverable; expand reveals a 2–3 line note and references a project as an example.
 
-### 12) Currently Building
-- Minimal Kanban-like static columns (In Research, Building, Polishing).
-- Each card is small with project name and 1-line status. Slight floating animation.
-
-### 13) Education
+### 12) Education
 - Boxed education cards (not timeline). Each card:
   - Degree / Course
   - Institution
@@ -142,14 +142,14 @@ A cinematic, interactive portfolio that reads like a polished AI Operating Syste
   - 1–2 highlights or relevant coursework
 - Animations: fade up; keep accessible.
 
-### 14) Hobbies
+### 13) Hobbies
 - Small floating glass cards for hobbies with icons and 1–2 lines. Letterboxd link included.
 
-### 15) Contact
+### 14) Contact
 - Glass contact form + social links (email, GitHub, LinkedIn).
 - Resume download button here too.
 
-### 16) Footer
+### 15) Footer
 - Short quote (optional) and repeat resume download. Minimal links and copyright notice.
 
 ## Editing Rules

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef, useCallback } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Menu, X, Download } from "lucide-react"
 import { cn } from "@/lib/utils"
@@ -24,6 +24,25 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
   const [activeSection, setActiveSection] = useState("")
+  const navRef = useRef<HTMLDivElement>(null)
+  const pillRef = useRef<HTMLDivElement>(null)
+  const btnRefs = useRef<Map<string, HTMLButtonElement>>(new Map())
+
+  const updatePill = useCallback(() => {
+    const nav = navRef.current
+    const pill = pillRef.current
+    if (!nav || !pill || !activeSection) return
+    const btn = btnRefs.current.get(activeSection)
+    if (!btn) { pill.style.opacity = "0"; return }
+    const navRect = nav.getBoundingClientRect()
+    const btnRect = btn.getBoundingClientRect()
+    const gap = 1
+    pill.style.left = `${btnRect.left - navRect.left - gap}px`
+    pill.style.top = `${btnRect.top - navRect.top - gap}px`
+    pill.style.width = `${btnRect.width + gap * 2}px`
+    pill.style.height = `${btnRect.height + gap * 2}px`
+    pill.style.opacity = "1"
+  }, [activeSection])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -38,8 +57,16 @@ export default function Navbar() {
       }
     }
     window.addEventListener("scroll", handleScroll, { passive: true })
+    handleScroll()
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
+
+  useEffect(() => { updatePill() }, [activeSection, updatePill])
+  useEffect(() => {
+    const onResize = () => updatePill()
+    window.addEventListener("resize", onResize)
+    return () => window.removeEventListener("resize", onResize)
+  }, [updatePill])
 
   useEffect(() => {
     if (mobileOpen) {
@@ -78,7 +105,6 @@ export default function Navbar() {
           role="navigation"
           aria-label="Main navigation"
         >
-          {/* Logo */}
           <button
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
             className="flex-shrink-0 rounded-full px-3 py-1.5 font-clash text-sm font-bold text-white/90 transition-all hover:text-white hover:bg-white/5"
@@ -87,17 +113,22 @@ export default function Navbar() {
             MH
           </button>
 
-          {/* Desktop nav links — all visible, full labels */}
-          <div className="hidden items-center gap-0.5 md:flex">
+          <div ref={navRef} className="relative hidden items-center gap-0.5 md:flex">
+            <div
+              ref={pillRef}
+              className="pointer-events-none absolute rounded-full border border-primary/20 bg-primary/8 shadow-[0_0_12px_rgba(0,212,255,0.12)] transition-all duration-300 ease-out"
+              style={{ opacity: 0 }}
+            />
             {sections.map((s) => (
               <button
                 key={s.id}
+                ref={(el) => { if (el) btnRefs.current.set(s.id, el) }}
                 onClick={() => scrollTo(s.id)}
                 className={cn(
-                  "rounded-full px-3 py-1.5 text-xs font-medium transition-all whitespace-nowrap",
+                  "relative z-10 rounded-full px-3 py-1.5 text-xs font-medium transition-colors whitespace-nowrap",
                   activeSection === s.id
-                    ? "bg-white/10 text-white"
-                    : "text-white/40 hover:text-white/70 hover:bg-white/5"
+                    ? "text-white"
+                    : "text-white/40 hover:text-white/70"
                 )}
               >
                 {s.label}
@@ -105,7 +136,6 @@ export default function Navbar() {
             ))}
           </div>
 
-          {/* Resume button */}
           <a
             href={personal.resume}
             download
@@ -115,7 +145,6 @@ export default function Navbar() {
             <span className="hidden sm:inline">Resume</span>
           </a>
 
-          {/* Mobile hamburger */}
           <button
             onClick={() => setMobileOpen(true)}
             className="flex items-center justify-center rounded-full p-2 text-white/60 transition-colors hover:text-white md:hidden"
@@ -126,7 +155,6 @@ export default function Navbar() {
         </nav>
       </motion.header>
 
-      {/* Mobile menu overlay */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
@@ -153,7 +181,7 @@ export default function Navbar() {
                 </button>
               </div>
 
-              <div className="flex flex-1 flex-col items-center justify-center gap-4 px-6 pb-10 sm:gap-5">
+              <div className="flex flex-1 flex-col items-center justify-center gap-3 px-6 pb-10 sm:gap-4">
                 {sections.map((s, i) => (
                   <motion.button
                     key={s.id}
@@ -162,11 +190,18 @@ export default function Navbar() {
                     transition={{ delay: i * 0.04 }}
                     onClick={() => scrollTo(s.id)}
                     className={cn(
-                      "font-clash text-xl sm:text-2xl transition-colors",
+                      "relative font-clash text-xl sm:text-2xl transition-colors py-1",
                       activeSection === s.id ? "text-primary" : "text-white/50 hover:text-white"
                     )}
                   >
-                    {s.label}
+                    {activeSection === s.id && (
+                      <motion.div
+                        layoutId="mobile-active-pill"
+                        className="absolute inset-x-0 -inset-x-4 -inset-y-1 rounded-lg bg-primary/8 border border-primary/15"
+                        transition={{ type: "spring", damping: 25, stiffness: 300 }}
+                      />
+                    )}
+                    <span className="relative z-10">{s.label}</span>
                   </motion.button>
                 ))}
 

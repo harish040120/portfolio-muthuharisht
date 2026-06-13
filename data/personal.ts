@@ -4,7 +4,7 @@ export const personal = {
   tagline: "Building Real-World AI Systems using RAG, LLMs, Computer Vision, Agentic AI and Intelligent Automation.",
   email: "harish040120@gmail.com",
   phone: "6379470943",
-  location: "Thoothukudi, Tamil Nadu, India",
+  location: "Coimbatore, Tamil Nadu, India",
   linkedin: "https://www.linkedin.com/in/harish040120",
   github: "https://github.com/harish040120",
   letterboxd: "https://boxd.it/bpFB3",

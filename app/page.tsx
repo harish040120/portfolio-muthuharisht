@@ -34,6 +34,8 @@ export default function Home() {
   useEffect(() => {
     const initLenis = async () => {
       if (typeof window === "undefined") return
+      const isMobile = window.matchMedia("(pointer: coarse)").matches || window.innerWidth < 768
+      if (isMobile) return
       try {
         const Lenis = (await import("lenis")).default
         const lenis = new Lenis({ duration: 1.2, smoothWheel: true })

@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef, useCallback } from "react"
+import { useEffect, useRef, useCallback, useState } from "react"
 import { motion } from "framer-motion"
 import Image from "next/image"
 import { personal } from "@/data/personal"
@@ -16,6 +16,11 @@ function ParticleBackground() {
     if (!canvas) return
     const ctx = canvas.getContext("2d")
     if (!ctx) return
+
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    if (prefersReduced) return
+    const isMobile = window.matchMedia("(pointer: coarse)").matches || window.innerWidth < 768
+    if (isMobile) return
 
     let animId: number
     const particles: { x: number; y: number; size: number; speedX: number; speedY: number; alpha: number }[] = []
@@ -55,11 +60,6 @@ function ParticleBackground() {
       animId = requestAnimationFrame(draw)
     }
     draw()
-
-    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    if (prefersReduced) {
-      cancelAnimationFrame(animId)
-    }
 
     return () => {
       cancelAnimationFrame(animId)
@@ -117,6 +117,11 @@ function OrbitingSkills() {
 }
 
 export default function Hero() {
+  const [isMobile, setIsMobile] = useState(false)
+  useEffect(() => {
+    setIsMobile(window.matchMedia("(pointer: coarse)").matches || window.innerWidth < 768)
+  }, [])
+
   const scrollToAbout = useCallback(() => {
     const el = document.getElementById("about")
     if (el) el.scrollIntoView({ behavior: "smooth" })
@@ -212,13 +217,15 @@ export default function Hero() {
           </motion.div>
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.3, duration: 0.8 }}
-        >
-          <OrbitingSkills />
-        </motion.div>
+        {!isMobile && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.3, duration: 0.8 }}
+          >
+            <OrbitingSkills />
+          </motion.div>
+        )}
       </div>
 
       <motion.button

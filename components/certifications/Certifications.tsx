@@ -5,14 +5,20 @@ import { motion, AnimatePresence } from "framer-motion"
 import { certifications } from "@/data/certifications"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 
-const INTERVAL_MS = 2000
+const BASE_INTERVAL_MS = 2000
+const MOBILE_INTERVAL_MS = 5000
 
 export default function Certifications() {
   const [current, setCurrent] = useState(0)
   const [failedImages, setFailedImages] = useState<Record<number, boolean>>({})
   const [direction, setDirection] = useState(0)
+  const [isMobile, setIsMobile] = useState(false)
   const currentRef = useRef(0)
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
+
+  useEffect(() => {
+    setIsMobile(window.matchMedia("(pointer: coarse)").matches || window.innerWidth < 768)
+  }, [])
 
   const total = certifications.length
 
@@ -38,8 +44,8 @@ export default function Certifications() {
     timerRef.current = setInterval(() => {
       const next = currentRef.current === total - 1 ? 0 : currentRef.current + 1
       goTo(next, 1)
-    }, INTERVAL_MS)
-  }, [total, goTo])
+    }, isMobile ? MOBILE_INTERVAL_MS : BASE_INTERVAL_MS)
+  }, [total, goTo, isMobile])
 
   useEffect(() => {
     resetTimer()

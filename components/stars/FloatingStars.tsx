@@ -26,6 +26,8 @@ function FloatingStars() {
 
     const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
     if (prefersReduced) return
+    const isMobile = window.matchMedia("(pointer: coarse)").matches || window.innerWidth < 768
+    if (isMobile) return
 
     let animId: number
     const stars: Star[] = []

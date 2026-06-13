@@ -1,7 +1,7 @@
 "use client"
 
-import { motion, useMotionValue, useTransform } from "framer-motion"
-import { useState } from "react"
+import { motion } from "framer-motion"
+import { useState, useEffect } from "react"
 
 const images = [
   { src: "/images/1.jpeg", alt: "Snapshot 1" },
@@ -22,6 +22,11 @@ const doubled = [...images, ...images]
 
 export default function ArtifactMarquee() {
   const [isHovered, setIsHovered] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    setIsMobile(window.matchMedia("(pointer: coarse)").matches || window.innerWidth < 768)
+  }, [])
 
   return (
     <section className="relative z-10 overflow-hidden py-12">
@@ -46,7 +51,7 @@ export default function ArtifactMarquee() {
         <motion.div
           className="flex"
           style={{ gap: GAP }}
-          animate={{ x: [0, -(ITEM_TOTAL * images.length)] }}
+          animate={isMobile ? {} : { x: [0, -(ITEM_TOTAL * images.length)] }}
           transition={{
             x: {
               duration: isHovered ? BASE_DURATION * 4 : BASE_DURATION,
@@ -55,7 +60,7 @@ export default function ArtifactMarquee() {
             },
           }}
         >
-          {doubled.map((img, i) => (
+          {(isMobile ? images : doubled).map((img, i) => (
             <ArtifactCard key={`${img.src}-${i}`} img={img} />
           ))}
         </motion.div>

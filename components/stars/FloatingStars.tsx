@@ -27,11 +27,10 @@ function FloatingStars() {
     const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
     if (prefersReduced) return
     const isMobile = window.matchMedia("(pointer: coarse)").matches || window.innerWidth < 768
-    if (isMobile) return
 
     let animId: number
     const stars: Star[] = []
-    const STAR_COUNT = 50
+    const STAR_COUNT = isMobile ? 15 : 50
 
     const resize = () => {
       canvas.width = window.innerWidth

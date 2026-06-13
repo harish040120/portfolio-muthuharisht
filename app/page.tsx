@@ -16,7 +16,6 @@ import ProjectHorizonDeck from "@/components/projects/ProjectHorizonDeck"
 import Patents from "@/components/patents/Patents"
 import Achievements from "@/components/achievements/Achievements"
 import Certifications from "@/components/certifications/Certifications"
-import Leadership from "@/components/leadership/Leadership"
 import BuildPhilosophy from "@/components/philosophy/BuildPhilosophy"
 import ArtifactMarquee from "@/components/artifact/ArtifactMarquee"
 import Education from "@/components/education/Education"
@@ -77,10 +76,9 @@ export default function Home() {
           <ProjectHorizonDeck />
           <Patents />
           <Achievements />
-          <Certifications />
-          <Leadership />
-          <BuildPhilosophy />
           <ArtifactMarquee />
+          <Certifications />
+          <BuildPhilosophy />
           <Education />
           <Hobbies />
           <Contact />

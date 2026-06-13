@@ -14,7 +14,7 @@ const sections = [
   { id: "patents", label: "Patents" },
   { id: "achievements", label: "Achievements" },
   { id: "certifications", label: "Certifications" },
-  { id: "leadership", label: "Leadership" },
+  { id: "build-philosophy", label: "Build Philosophy" },
   { id: "education", label: "Education" },
   { id: "hobbies", label: "Hobbies" },
   { id: "contact", label: "Contact" },
@@ -24,9 +24,14 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
   const [activeSection, setActiveSection] = useState("")
+  const [isMobile, setIsMobile] = useState(false)
   const navRef = useRef<HTMLDivElement>(null)
   const pillRef = useRef<HTMLDivElement>(null)
   const btnRefs = useRef<Map<string, HTMLButtonElement>>(new Map())
+
+  useEffect(() => {
+    setIsMobile(window.matchMedia("(pointer: coarse)").matches || window.innerWidth < 768)
+  }, [])
 
   const updatePill = useCallback(() => {
     const nav = navRef.current
@@ -86,7 +91,7 @@ export default function Navbar() {
   return (
     <>
       <motion.header
-        initial={{ y: -100 }}
+        initial={isMobile ? false : { y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
         className={cn(

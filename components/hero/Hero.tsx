@@ -20,7 +20,6 @@ function ParticleBackground() {
     const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
     if (prefersReduced) return
     const isMobile = window.matchMedia("(pointer: coarse)").matches || window.innerWidth < 768
-    if (isMobile) return
 
     let animId: number
     const particles: { x: number; y: number; size: number; speedX: number; speedY: number; alpha: number }[] = []
@@ -32,7 +31,7 @@ function ParticleBackground() {
     resize()
     window.addEventListener("resize", resize)
 
-    for (let i = 0; i < 80; i++) {
+    for (let i = 0; i < (isMobile ? 20 : 80); i++) {
       particles.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,

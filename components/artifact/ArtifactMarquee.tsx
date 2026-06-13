@@ -51,16 +51,16 @@ export default function ArtifactMarquee() {
         <motion.div
           className="flex"
           style={{ gap: GAP }}
-          animate={isMobile ? {} : { x: [0, -(ITEM_TOTAL * images.length)] }}
+          animate={{ x: [0, -(ITEM_TOTAL * images.length)] }}
           transition={{
             x: {
-              duration: isHovered ? BASE_DURATION * 4 : BASE_DURATION,
+              duration: isHovered ? BASE_DURATION * 4 : isMobile ? BASE_DURATION * 2 : BASE_DURATION,
               repeat: Infinity,
               ease: "linear",
             },
           }}
         >
-          {(isMobile ? images : doubled).map((img, i) => (
+          {doubled.map((img, i) => (
             <ArtifactCard key={`${img.src}-${i}`} img={img} />
           ))}
         </motion.div>

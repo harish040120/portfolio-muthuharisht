@@ -14,10 +14,30 @@ export default function ProjectHorizonDeck() {
   useEffect(() => {
     if (expandedId) {
       document.body.style.overflow = "hidden"
+      // Try to lock the body scroll position to prevent background scroll
+      document.body.style.position = "fixed"
+      document.body.style.top = `-${window.scrollY}px`
+      document.body.style.width = "100%"
+      document.body.style.height = "100%"
     } else {
+      const scrollY = document.body.style.top
       document.body.style.overflow = ""
+      document.body.style.position = ""
+      document.body.style.top = ""
+      document.body.style.width = ""
+      document.body.style.height = ""
+      // Restore scroll position
+      window.scrollTo({
+        top: scrollY ? parseInt(scrollY || "0") * -1 : 0,
+      })
     }
-    return () => { document.body.style.overflow = "" }
+    return () => {
+      document.body.style.overflow = ""
+      document.body.style.position = ""
+      document.body.style.top = ""
+      document.body.style.width = ""
+      document.body.style.height = ""
+    }
   }, [expandedId])
 
   useEffect(() => {
@@ -184,20 +204,13 @@ function ExpandedProject({
   const hasImage = project.image && !failedImages[project.id]
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.25 }}
-      className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/70 backdrop-blur-sm"
-      onClick={onClose}
-    >
+    <div className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/70 backdrop-blur-sm p-4 sm:p-6 md:p-8">
       <motion.div
         initial={{ opacity: 0, scale: 0.95, y: 30 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.97, y: 10 }}
         transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-        className="relative my-8 w-full max-w-3xl overflow-hidden rounded-2xl border border-white/10 bg-surface shadow-2xl sm:my-16"
+        className="relative my-auto w-full max-w-3xl overflow-hidden rounded-2xl border border-white/10 bg-surface shadow-2xl max-sm:my-2"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close button */}
@@ -319,6 +332,6 @@ function ExpandedProject({
           </div>
         </div>
       </motion.div>
-    </motion.div>
+    </div>
   )
 }
